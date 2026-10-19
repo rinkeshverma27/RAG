@@ -10,6 +10,8 @@
 
 The full prompt and the raw response of every LLM call quoted below are saved in `llm_prompts_and_responses.md` (and `.json`).
 
+The test questions were picked by first checking retrieval ranks (without the LLM) and keeping cases that show each failure type. So they illustrate how the baseline fails; they don't measure how often it fails.
+
 ---
 
 ## 1. Architecture comparison
@@ -34,9 +36,10 @@ A cross-encoder takes the question and the chunk together as one input. Every wo
 | When a DPIA is mandatory | Buried chunk | 353 (Art. 35(1)–(3)) | #6 | **#2** |
 | Storage limitation | Re-rank regression | 84 (Recital 65, useful) | #3 | #5 (dropped out) |
 | | | 78 (Recital 61, irrelevant) | #8 | #3 (pulled in) |
+| Erasure refused because of a legal obligation | Exception (retention) | 306 (Art. 17(3)(b)) | #9 | **#2** |
 | 72-hour breach deadline | Control | 347 (Art. 33(1)) | #1 | #1 |
 
-In 4 of the 6 queries the chunk that actually answers the question was outside the baseline top 3 (ranks 4–6) and re-ranking moved it into the top 3.
+In 5 of the 7 queries the chunk that actually answers the question was outside the baseline top 3 (ranks 4–9) and re-ranking moved it into the top 3.
 
 ### Answer 1 vs. Answer 2
 
@@ -77,26 +80,36 @@ I kept this case on purpose, because re-ranking made things worse here.
 
 So the cross-encoder is not always right. It can push out a useful chunk in favour of one that only looks relevant.
 
+**Exception (retention): "Can a controller refuse an erasure request because a law obliges it to keep the data?"**
+
+This is the same retention topic as the case above, but here re-ranking does what it should.
+- **Baseline top 3:** the start of Art. 17(1) (the reasons a controller *must* erase data) and two recitals on data portability. The exception in Art. 17(3) sat at #9.
+- **Answer 1:** said "Yes", but for the wrong reason. It took Art. 17(1)(e), "the personal data have to be erased for compliance with a legal obligation", which is a reason the controller has to *delete* data, and twisted it into a reason to *keep* data.
+- **Answer 2:** said "Yes" and gave the real basis: Art. 17(3)(b), where erasure does not apply if processing is needed to comply with a legal obligation.
+
+The conclusion happened to match, but Answer 1 misstated the rule. Someone relying on it would cite the wrong clause, one that says the opposite.
+
 **Control: "What is the maximum time limit for notifying the competent supervisory authority after becoming aware of a personal data breach?"** Both pipelines had Art. 33(1) at #1 and both answers correctly said 72 hours.
 
 **Hallucination.** The LLM never invented a rule in these tests. Because the prompt forces it to stay inside the context, a missing chunk showed up in three ways:
 - a refusal (exception case);
 - a misleading answer built from the wrong passages (negation and keyword trap);
-- an incomplete answer (buried chunk).
+- an incomplete answer (buried chunk);
+- the right conclusion with the wrong legal reason (retention exception).
 
 ---
 
 ## 3. Latency
 
-Each of the 6 queries was run 10 times through both stages, on CPU. LLM time is not included because it is the same for both pipelines.
+Each of the 7 queries was run 10 times through both stages, on CPU. LLM time is not included because it is the same for both pipelines.
 
 | Stage | Median (ms) | Mean (ms) | Min (ms) | Max (ms) |
 |---|---|---|---|---|
-| Pipeline 1: embed query + cosine search (top 10) | 39.4 | 39.6 | 37.4 | 57.1 |
-| Re-ranking: cross-encoder on 10 pairs | 1180.3 | 1387.2 | 1068.7 | 2140.8 |
-| Pipeline 2 total | 1220.7 | 1426.8 | 1108.2 | 2179.1 |
+| Pipeline 1: embed query + cosine search (top 10) | 56.2 | 57.3 | 49.9 | 75.6 |
+| Re-ranking: cross-encoder on 10 pairs | 1760.5 | 1991.1 | 1534.0 | 3136.8 |
+| Pipeline 2 total | 1824.2 | 2048.4 | 1588.8 | 3191.1 |
 
-Pipeline 2 is about **31× slower** (median).
+Pipeline 2 is about **32× slower** (median). The absolute times change between runs depending on how busy the machine is (an earlier run gave about 39 ms vs. 1220 ms), but the ratio stays around 30×.
 - **Baseline:** the chunk vectors are already computed, so it only encodes one short question and does one matrix multiplication.
 - **Cross-encoder:** has to run the full model 10 separate times, once per (question, chunk) pair, and each pair can be up to 512 tokens long.
 
@@ -108,8 +121,8 @@ On a GPU the re-ranking step would be much faster, but it would still be the slo
 
 For the same reason, the cross-encoder can't be used as the first stage. Its scores can't be precomputed, so every chunk would have to go through the model together with the question at query time.
 
-I measured this by scoring all 537 chunks for one question. It took **87.3 s, about 163 ms per pair**. For a collection of 100,000 chunks:
+I measured this by scoring all 537 chunks for one question. It took **107.2 s, about 200 ms per pair**. For a collection of 100,000 chunks:
 
-100,000 × 0.163 s ≈ 16,260 s ≈ **271 minutes (about 4.5 hours) for a single question**
+100,000 × 0.200 s ≈ 19,960 s ≈ **333 minutes (about 5.5 hours) for a single question**
 
-The bi-encoder has already embedded those 100,000 chunks offline, so at query time it still only needs one question embedding and a vector search, which takes milliseconds (here, under 40 ms for 537 chunks). That's why the two are combined: the bi-encoder cheaply narrows the collection down to 10 candidates, and the expensive cross-encoder is only used on those 10.
+The bi-encoder has already embedded those 100,000 chunks offline, so at query time it still only needs one question embedding and a vector search, which takes milliseconds (here, about 60 ms for 537 chunks). That's why the two are combined: the bi-encoder cheaply narrows the collection down to 10 candidates, and the expensive cross-encoder is only used on those 10.

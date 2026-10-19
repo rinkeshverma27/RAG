@@ -331,6 +331,70 @@ Answer:
 Personal data may be stored for longer periods if processed solely for archiving purposes in the public interest, scientific or historical research purposes, or statistical purposes, in accordance with Article 89(1). This is subject to the implementation of appropriate technical and organisational measures to safeguard the rights and freedoms of the data subject. This is referred to as ‘storage limitation’.
 ```
 
+## [exception (retention)] Erasure refused because of a legal obligation
+
+**Query:** Can a controller refuse an erasure request because a law obliges it to keep the data?
+
+### Pipeline 1 (baseline): chunks [304, 90, 89] (2026-10-19 16:47:21)
+
+**Prompt sent:**
+
+```text
+You are answering a question about a document. Use ONLY the context below.
+If the context does not contain enough information to answer, reply exactly: "Not found in context."
+Do not use outside knowledge. Answer in at most 120 words, and state any exception or restriction that appears in the context.
+
+Context:
+[Chunk 304, page 43]
+The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies: (a) the personal data are no longer necessary in relation to the purposes for which they were collected or otherwise processed; 4.5.2016 L 119/43 Official Journal of the European Union EN (b) the data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or point (a) of Article 9(2), and where there is no other legal ground for the processing; (c) the data subject objects to the processing pursuant to Article 21(1) and there are no overriding legitimate grounds for the processing, or the data subject objects to the processing pursuant to Article 21(2); (d) the personal data have been unlawfully processed; (e) the personal data have to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject; (f) the personal data have been collected in relation to the offer of information society services referred to in Article 8(1).
+
+[Chunk 90, page 13]
+Furthermore, that right should not prejudice the right of the data subject to obtain the erasure of personal data and the limitations of that right as set out in this Regulation and should, in particular, not imply the erasure of personal data concerning the data subject which have been provided by him or her for the performance of a contract to the extent that and for as long as the personal data are necessary for the performance of that contract. Where technically feasible, the data subject should have the right to have the personal data transmitted directly from one controller to another. (69) Where personal data might lawfully be processed because processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller, or on grounds of the legitimate interests of a controller or a third party, a data subject should, nevertheless, be entitled to object to the processing of any personal data relating to his or her particular situation. It should be for the controller to demonstrate that its compelling legitimate interest overrides the interests or the fundamental rights and freedoms of the data subject.
+
+[Chunk 89, page 13]
+Where, in a certain set of personal data, more than one data subject is concerned, the right to receive the personal data should be without prejudice to the rights and freedoms of other data subjects in accordance with this Regulation. Furthermore, that right should not prejudice the right of the data subject to obtain the erasure of personal data and the limitations of that right as set out in this Regulation and should, in particular, not imply the erasure of personal data concerning the data subject which have been provided by him or her for the performance of a contract to the extent that and for as long as the personal data are necessary for the performance of that contract. Where technically feasible, the data subject should have the right to have the personal data transmitted directly from one controller to another.
+
+Question: Can a controller refuse an erasure request because a law obliges it to keep the data?
+
+Answer:
+```
+
+**Response received:**
+
+```text
+Yes, a controller can refuse an erasure request if the personal data has to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject. This is one of the grounds for erasure, but its absence would allow the controller to retain the data.
+```
+
+### Pipeline 2 (re-ranked): chunks [304, 306, 309] (2026-10-19 16:47:22)
+
+**Prompt sent:**
+
+```text
+You are answering a question about a document. Use ONLY the context below.
+If the context does not contain enough information to answer, reply exactly: "Not found in context."
+Do not use outside knowledge. Answer in at most 120 words, and state any exception or restriction that appears in the context.
+
+Context:
+[Chunk 304, page 43]
+The data subject shall have the right to obtain from the controller the erasure of personal data concerning him or her without undue delay and the controller shall have the obligation to erase personal data without undue delay where one of the following grounds applies: (a) the personal data are no longer necessary in relation to the purposes for which they were collected or otherwise processed; 4.5.2016 L 119/43 Official Journal of the European Union EN (b) the data subject withdraws consent on which the processing is based according to point (a) of Article 6(1), or point (a) of Article 9(2), and where there is no other legal ground for the processing; (c) the data subject objects to the processing pursuant to Article 21(1) and there are no overriding legitimate grounds for the processing, or the data subject objects to the processing pursuant to Article 21(2); (d) the personal data have been unlawfully processed; (e) the personal data have to be erased for compliance with a legal obligation in Union or Member State law to which the controller is subject; (f) the personal data have been collected in relation to the offer of information society services referred to in Article 8(1).
+
+[Chunk 306, page 44]
+Where the controller has made the personal data public and is obliged pursuant to paragraph 1 to erase the personal data, the controller, taking account of available technology and the cost of implementation, shall take reasonable steps, including technical measures, to inform controllers which are processing the personal data that the data subject has requested the erasure by such controllers of any links to, or copy or replication of, those personal data. 3. Paragraphs 1 and 2 shall not apply to the extent that processing is necessary: (a) for exercising the right of freedom of expression and information; (b) for compliance with a legal obligation which requires processing by Union or Member State law to which the controller is subject or for the performance of a task carried out in the public interest or in the exercise of official authority vested in the controller; (c) for reasons of public interest in the area of public health in accordance with points (h) and (i) of Article 9(2) as well as Article 9(3); (d) for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes in accordance with Article 89(1) in so far as the right referred to in paragraph 1 is likely to render impossible or seriously impair the achievement of the objectives of that processing; or (e) for the establishment, exercise or defence of legal claims.
+
+[Chunk 309, page 44]
+The data subject shall have the right to obtain from the controller restriction of processing where one of the following applies: (a) the accuracy of the personal data is contested by the data subject, for a period enabling the controller to verify the accuracy of the personal data; (b) the processing is unlawful and the data subject opposes the erasure of the personal data and requests the restriction of their use instead; (c) the controller no longer needs the personal data for the purposes of the processing, but they are required by the data subject for the establishment, exercise or defence of legal claims; (d) the data subject has objected to processing pursuant to Article 21(1) pending the verification whether the legitimate grounds of the controller override those of the data subject. 2. Where processing has been restricted under paragraph 1, such personal data shall, with the exception of storage, only be processed with the data subject's consent or for the establishment, exercise or defence of legal claims or for the protection of the rights of another natural or legal person or for reasons of important public interest of the Union or of a Member State.
+
+Question: Can a controller refuse an erasure request because a law obliges it to keep the data?
+
+Answer:
+```
+
+**Response received:**
+
+```text
+Yes, a controller can refuse an erasure request if processing is necessary for compliance with a legal obligation which requires processing by Union or Member State law to which the controller is subject. This is an exception to the right to erasure.
+```
+
 ## [control] 72-hour breach notification deadline
 
 **Query:** What is the maximum time limit for notifying the competent supervisory authority after becoming aware of a personal data breach?
