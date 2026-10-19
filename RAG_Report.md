@@ -1,8 +1,11 @@
 # RAG Assignment: Baseline vs. Re-Ranking
 
-**GitHub:** https://github.com/rinkeshverma27/RAG
-**Code:** `rag_baseline_vs_reranking.ipynb` (all code and outputs)
-**Proof of LLM answers:** `llm_prompts_and_responses.md` (exact prompt and response for every call)
+**Name:** Rinkesh Verma
+**Roll number:** 2025201070
+
+**GitHub:** [https://github.com/rinkeshverma27/RAG](https://github.com/rinkeshverma27/RAG)
+**Code:** [`rag_baseline_vs_reranking.ipynb`](https://github.com/rinkeshverma27/RAG/blob/main/rag_baseline_vs_reranking.ipynb) (all code and outputs)
+**Proof of LLM answers:** [`llm_prompts_and_responses.md`](https://github.com/rinkeshverma27/RAG/blob/main/llm_prompts_and_responses.md) (exact prompt and response for every call)
 
 ## Setup
 
