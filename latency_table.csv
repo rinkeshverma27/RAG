@@ -1,0 +1,4 @@
+Stage,Median (ms),Mean (ms),Min (ms),Max (ms)
+Pipeline 1: query embedding + cosine search (Top 10),39.4,39.6,37.4,57.1
+Re-ranking: Cross-Encoder on 10 pairs,1180.3,1387.2,1068.7,2140.8
+Pipeline 2 total: retrieval + re-ranking,1220.7,1426.8,1108.2,2179.1

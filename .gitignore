@@ -1,0 +1,13 @@
+# Secrets: never commit these
+secret.key
+api_key.enc
+gemini_api_key.enc
+.env
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+venv/
+
+# Assignment brief (not part of the submission)
+RAG_LMA_Assignment_v1.pdf

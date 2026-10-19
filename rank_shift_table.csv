@@ -1,0 +1,7 @@
+Query,Type,Gold chunk,Baseline rank,Re-ranked rank,In baseline top 3,In re-ranked top 3
+Breach communication encryption exemption,exception,"350, 351",#5,#1,False,True
+Direct marketing objection override prohibition,negation,314,#4,#3,False,True
+Maximum administrative fine,keyword trap,"513, 514, 515, 516",#4,#1,False,True
+When a DPIA is mandatory,buried chunk,"353, 354",#6,#2,False,True
+Storage limitation archiving exception,re-rank regression,"253, 254, 255",#1,#1,True,True
+72-hour breach notification deadline,control,"122, 123, 346, 347",#1,#1,True,True
